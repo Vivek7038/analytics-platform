@@ -16,6 +16,7 @@ function App() {
   const { currentUser, setCurrentUser } = useContext(MyContext);
 
   const RequiredAuth = ({ children }) => {
+    console.log("called");
     return currentUser ? children : <Navigate to="/login" />;
   };
 

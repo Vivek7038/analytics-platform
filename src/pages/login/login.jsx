@@ -32,7 +32,7 @@ const LoginForm = () => {
       );
       if (userCredential.user) {
         setCurrentUser(true);
-        <Navigate replace to="/" />;
+        <Navigate  to="/page1" />;
       }
       console.log("User logged in Successfully");
     } catch (error) {
@@ -91,23 +91,6 @@ const LoginForm = () => {
             >
               <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                 {/* <!-- Heroicon name: solid/lock-closed --> */}
-                <svg
-                  className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 12a2 2 0 100-4 2 2 0 000 4z"
-                  />
-                  <path
-                    fillRule="evenodd"
-                    d="M4 7a4 4 0 118 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2V7zm10 0h1a2 2 0 012 2v5a4 4 0 11-8 0V9a2 2 0 012-2h1V5a4 4 0 118 0v2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
               </span>
               Sign in
             </button>
