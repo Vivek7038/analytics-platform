@@ -4,6 +4,8 @@ import { auth } from "../../firebase";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "email") {
@@ -27,6 +29,8 @@ const LoginForm = () => {
         password
       );
       if (userCredential.user) {
+     
+        
       }
       console.log("User logged in Successfully");
     } catch (error) {
