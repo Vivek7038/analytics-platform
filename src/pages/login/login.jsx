@@ -2,11 +2,12 @@ import React, { useContext, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { MyContext } from "../../provider/AuthProvider";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { currentUser, setCurrentUser } = useContext(MyContext);
+  let navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,7 +33,7 @@ const LoginForm = () => {
       );
       if (userCredential.user) {
         setCurrentUser(true);
-        <Navigate  to="/page1" />;
+        navigate("/")
       }
       console.log("User logged in Successfully");
     } catch (error) {
