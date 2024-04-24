@@ -27,7 +27,7 @@ const Form = () => {
         Personal Details/वैयक्तिक माहिती
       </h2>
       <div>
-        <div className="min-h-screen  flex justify-center">
+        <div className="min-h-screen  flex justify-center px-2">
           <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10">
             <form onSubmit={handleSubmit}>
               <div className="py-2">
