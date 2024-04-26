@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Form from "../components/Form";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -9,12 +10,7 @@ const Home = () => {
       <div className="mt-[12vh]">
         {" "}
         {/* Added margin-top to create space below the navbar */}
-        <div>
-          <p className="text-right text-black font-bold px-2 py-4 ">
-            मा. आमदार चंद्रकांत पुंडलीकराव दानवे{" "}
-          </p>
-        </div>
-        <div className="border-b-2 border-black"></div>
+        {/* <div className="border-b-2 border-black"></div> */}
         <div className="flex flex-col ">
           <img
             src="./banner-1.png"
@@ -24,6 +20,7 @@ const Home = () => {
         </div>
         <Form />
       </div>
+      <Footer/>
     </div>
   );
 };

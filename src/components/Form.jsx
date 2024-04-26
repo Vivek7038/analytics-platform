@@ -27,7 +27,7 @@ const Form = () => {
         Personal Details/वैयक्तिक माहिती
       </h2>
       <div>
-        <div className="min-h-screen  flex justify-center px-2">
+        <div className="min-h-svh flex justify-center px-2">
           <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10">
             <form onSubmit={handleSubmit}>
               <div className="py-2">
@@ -36,7 +36,7 @@ const Form = () => {
                   type="text"
                   name="full_name"
                   id="full_name"
-                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
+                  className="h-10 border pt-2 rounded px-4 w-full  bg-gray-50"
                   value={formData.full_name}
                   onChange={handleChange}
                 />
@@ -78,7 +78,7 @@ const Form = () => {
               </div>
               <button
               //   type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                className="bg-[#171480] w-[96%] text-white px-4 py-2 rounded mt-4"
               >
                 Next/पुढे
               </button>
