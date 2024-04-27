@@ -11,11 +11,11 @@ const Home = () => {
         {" "}
         {/* Added margin-top to create space below the navbar */}
         {/* <div className="border-b-2 border-black"></div> */}
-        <div className="flex flex-col ">
+        <div className="flex flex-col">
           <img
             src="./banner-1.png"
             alt="banner"
-            className="pt-[20px] w-full h-[300px] object-contain"
+            className="pt-[20px] w-full h-[300px] object-contain -z-10"
           />
         </div>
         <Form />
