@@ -24,11 +24,11 @@ const Navbar = () => {
           </div>
         </div>
       </header> */}
-      <div className="grid grid-rows-2 grid-flow-col border-b-2 ">
-        <div className="row-span-3 ">
+      <div className="grid grid-rows-2 grid-flow-col fixed w-full top-0 border-b-2 z-10">
+        <div className="row-span-3 bg-white ">
           <img
             src="./cropped_logo.png"
-            className="  w-20 ml-4 ml-1 mt-5"
+            className="  w-20 ml-4 ml-1 mt-5 "
             alt={"logo"}
           />
         </div>
@@ -38,7 +38,7 @@ const Navbar = () => {
             राष्ट्रवादी काँग्रेस पक्ष शरदचंद्र पवार <br></br> भोकरदन - जाफ्राबाद
           </p>
         </div>
-        <div className="row-span-2 col-span-2 ...">
+        <div className="row-span-2 col-span-2 bg-white ">
           <p className=" bg-white text-[#171480] pl-12  text-center pt-3 font-semiboldbold font-yatra-one text-xl">
             मा. आमदार चंद्रकांत पुंडलीकराव दानवे{" "}
           </p>
