@@ -95,7 +95,9 @@ const Form = () => {
               </div>
 
               <div className="py-2">
-                <label htmlFor="full_name">Name/नाव *</label>
+                <label htmlFor="full_name">
+                  Name/नाव <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   name="full_name"
@@ -108,6 +110,7 @@ const Form = () => {
               <div className="py-2">
                 <label htmlFor="whatsapp_no">
                   WhatsApp No/व्हॉट्सॲप क्र. *
+                  <span className="text-red-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -130,7 +133,9 @@ const Form = () => {
                 />
               </div>
               <div className="py-2">
-                <label htmlFor="position">Position/पद</label>
+                <label htmlFor="position">
+                  Position/पद <span className="text-red-600">*</span>
+                </label>
                 <input
                   type="text"
                   name="position"
@@ -141,7 +146,7 @@ const Form = () => {
                 />
               </div>
               <div className="py-2 relative flex flex-col gap-2">
-                <label htmlFor="whatsapp_no">
+                <label htmlFor="Profile Photo">
                   Upload Profile Pic/प्रोफाइल फोटो अपलोड करा
                 </label>
                 <input
@@ -195,7 +200,7 @@ const Form = () => {
 
               <div className="my-2">
                 <p className="py-2">
-                  Taluka/तालुका *<span className="text-red-600">*</span>
+                  Taluka/तालुका<span className="text-red-600">*</span>
                 </p>
                 <input
                   type="radio"
@@ -230,7 +235,9 @@ const Form = () => {
               </div>
 
               <div className="py-2">
-                <label htmlFor="Village">Information/माहिती*</label>
+                <label htmlFor="Village">
+                  Information/माहिती<span className="text-red-600">*</span>
+                </label>
                 <textarea
                   type="text"
                   name="information"
@@ -242,7 +249,7 @@ const Form = () => {
                 />
               </div>
               <button
-                //   type="submit"
+                  type="submit"
                 className="bg-[#171480] w-[96%] text-white px-4 py-2 rounded mt-4"
               >
                 Register/नोंदवा{" "}
