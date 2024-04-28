@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { db, storage } from "../firebase";
+import { addDoc, collection } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -7,7 +10,7 @@ const Form = () => {
     mobile_no: "",
     position: "",
   });
-
+  const [image, setImage] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -16,9 +19,58 @@ const Form = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  // useEffect(() => {
+  //   const uploadFile = () => {
+  //     const name = new Date().getTime() + image.name;
+  //     console.log(name);
+  //     const storageRef = ref(storage, image.name);
+  //     const uploadTask = uploadBytesResumable(storageRef, image);
+
+  //     uploadTask.on(
+  //       "state_changed",
+  //       (snapshot) => {
+
+  //         const progress =
+  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //         console.log("Upload is " + progress + "% done");
+  //         switch (snapshot.state) {
+  //           case "paused":
+  //             console.log("Upload is paused");
+  //             break;
+  //           case "running":
+  //             console.log("Upload is running");
+  //             break;
+  //         }
+  //       },
+  //       (error) => {
+  //         console.log(error)
+  //       },
+  //       () => {
+
+  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //           // console.log("File available at", downloadURL);
+  //           setFormData((prev)=>({...prev,img:downloadURL}))
+  //         });
+  //       }
+  //     );
+  //   };
+  //   image && uploadFile();
+  // }, [image]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+    try {
+      const docRef = await addDoc(
+        collection(db, "userinfo"),
+        {
+          ...formData,
+        },
+        console.log("datasend ")
+      );
+    } catch (error) {
+      console.log(error);
+    }
+
     console.log(formData);
   };
   return (
@@ -27,9 +79,22 @@ const Form = () => {
         Personal Details/वैयक्तिक माहिती
       </h2>
       <div>
-        <div className="min-h-svh flex justify-center px-2">
-          <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10">
+        <div className="min-h-svh flex justify-center flex-col px-2 ">
+          <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10 fe">
             <form onSubmit={handleSubmit}>
+              <div className="py-2 flex items-center justify-center ">
+                {image && (
+                  <div className="rounded-full border-2 w-20 h-20 overflow-hidden">
+                    {/* <h2>Preview:</h2> */}
+                    <img
+                      src={URL.createObjectURL(image)}
+                      alt="Preview"
+                      className="rounded-full w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="py-2">
                 <label htmlFor="full_name">Name/नाव *</label>
                 <input
@@ -76,8 +141,21 @@ const Form = () => {
                   onChange={handleChange}
                 />
               </div>
+              <div className="py-2 relative flex flex-col gap-2">
+                <label htmlFor="whatsapp_no">
+                  Upload Profile Pic/प्रोफाइल फोटो अपलोड करा
+                </label>
+                <input
+                  type="file"
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={(e) => setImage(e.target.files[0])}
+                />
+                <button class="bg-[#171480]  text-white font-bold py-2 px-4 rounded">
+                  Choose File
+                </button>
+              </div>
               <button
-              //   type="submit"
+                //   type="submit"
                 className="bg-[#171480] w-[96%] text-white px-4 py-2 rounded mt-4"
               >
                 Next/पुढे
