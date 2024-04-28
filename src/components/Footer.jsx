@@ -6,7 +6,7 @@ import {Twitter} from "../assets/SVG/Twitter"
 
 const Footer = () => {
   return (
-    <div className="min-h-[60vh] bg-[#171480] w-full">
+    <div className="min-h-[46vh] bg-[#171480] w-full">
       <div className="text-center flex  flex-col ">
         <h2 className="text-lg font-semibold text-white mt-4 mb-6">Address</h2>
         <div className="flex flex-col gap-2">

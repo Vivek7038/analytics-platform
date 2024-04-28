@@ -4,13 +4,18 @@ import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Form = () => {
+  const [image, setImage] = useState(null);
   const [formData, setFormData] = useState({
     full_name: "",
     whatsapp_no: "",
     mobile_no: "",
     position: "",
+    gender: "",
+    Taluka: "",
+    dateOfBirth: "",
+    village: "",
+    information: "",
   });
-  const [image, setImage] = useState(null);
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -18,44 +23,38 @@ const Form = () => {
       [name]: value,
     }));
   };
+  const uploadFile = () => {
+    const name = new Date().getTime() + image.name;
+    console.log(name);
+    const storageRef = ref(storage, image.name);
+    const uploadTask = uploadBytesResumable(storageRef, image);
 
-  // useEffect(() => {
-  //   const uploadFile = () => {
-  //     const name = new Date().getTime() + image.name;
-  //     console.log(name);
-  //     const storageRef = ref(storage, image.name);
-  //     const uploadTask = uploadBytesResumable(storageRef, image);
-
-  //     uploadTask.on(
-  //       "state_changed",
-  //       (snapshot) => {
-
-  //         const progress =
-  //           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-  //         console.log("Upload is " + progress + "% done");
-  //         switch (snapshot.state) {
-  //           case "paused":
-  //             console.log("Upload is paused");
-  //             break;
-  //           case "running":
-  //             console.log("Upload is running");
-  //             break;
-  //         }
-  //       },
-  //       (error) => {
-  //         console.log(error)
-  //       },
-  //       () => {
-
-  //         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //           // console.log("File available at", downloadURL);
-  //           setFormData((prev)=>({...prev,img:downloadURL}))
-  //         });
-  //       }
-  //     );
-  //   };
-  //   image && uploadFile();
-  // }, [image]);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          // console.log("File available at", downloadURL);
+          setFormData((prev) => ({ ...prev, img: downloadURL }));
+        });
+      }
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,6 +66,7 @@ const Form = () => {
         },
         console.log("datasend ")
       );
+      image && uploadFile();
     } catch (error) {
       console.log(error);
     }
@@ -79,20 +79,19 @@ const Form = () => {
         Personal Details/वैयक्तिक माहिती
       </h2>
       <div>
-        <div className="min-h-svh flex justify-center flex-col px-2 ">
+        <div className="min-h-svh flex justify-center flex-col px-2 my-4">
           <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10 fe">
             <form onSubmit={handleSubmit}>
               <div className="py-2 flex items-center justify-center ">
-                {image && (
-                  <div className="rounded-full border-2 w-20 h-20 overflow-hidden">
-                    {/* <h2>Preview:</h2> */}
+                <div className="rounded-full border-2 border-black w-20 h-20 overflow-hidden">
+                  {image && (
                     <img
                       src={URL.createObjectURL(image)}
                       alt="Preview"
                       className="rounded-full w-full h-full object-cover"
                     />
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
 
               <div className="py-2">
@@ -151,14 +150,102 @@ const Form = () => {
                   onChange={(e) => setImage(e.target.files[0])}
                 />
                 <button class="bg-[#171480]  text-white font-bold py-2 px-4 rounded">
-                  Choose File
+                  {image ? "Change Picture" : "Choose File"}
                 </button>
+              </div>
+
+              <div className="my-2">
+                <p className="py-2">
+                  Gender/लिंग<span className="text-red-600">*</span>
+                </p>
+                <input
+                  type="radio"
+                  id="Male"
+                  name="gender"
+                  value="Male"
+                  onChange={handleChange}
+                />
+                <label className="pr-4" htmlFor="male">
+                  Male/पुरुष
+                </label>
+
+                <input
+                  type="radio"
+                  id="Female"
+                  name="gender"
+                  value="Female"
+                  onChange={handleChange}
+                />
+                <label htmlFor="female">Female/स्त्री</label>
+              </div>
+              <div className="py-2">
+                <label htmlFor="position ">
+                  Date of Birth/जन्मतारीख{" "}
+                  <span className="text-red-600">*</span>
+                </label>
+                <input
+                  type="date"
+                  name="dateOfBirth"
+                  id="dateOfBirth"
+                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="my-2">
+                <p className="py-2">
+                  Taluka/तालुका *<span className="text-red-600">*</span>
+                </p>
+                <input
+                  type="radio"
+                  id="भोकरदन"
+                  name="Taluka"
+                  value="भोकरदन"
+                  onChange={handleChange}
+                />
+                <label className="pr-4" htmlFor="Taluka">
+                  भोकरदन
+                </label>
+
+                <input
+                  type="radio"
+                  id="जाफ्राबाद"
+                  name="Taluka"
+                  value="जाफ्राबाद"
+                  onChange={handleChange}
+                />
+                <label htmlFor="Taluka">जाफ्राबाद</label>
+              </div>
+              <div className="py-2">
+                <label htmlFor="Village">Village Name/गावाचे नाव*</label>
+                <input
+                  type="text"
+                  name="village"
+                  id="village"
+                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
+                  value={formData.village}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="py-2">
+                <label htmlFor="Village">Information/माहिती*</label>
+                <textarea
+                  type="text"
+                  name="information"
+                  id="information"
+                  rows={4}
+                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
+                  value={formData.information}
+                  onChange={handleChange}
+                />
               </div>
               <button
                 //   type="submit"
                 className="bg-[#171480] w-[96%] text-white px-4 py-2 rounded mt-4"
               >
-                Next/पुढे
+                Register/नोंदवा{" "}
               </button>
             </form>
           </div>
