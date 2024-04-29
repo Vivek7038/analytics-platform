@@ -11,7 +11,7 @@ const Navbar = () => {
             alt={"logo"}
           />
           <div className="col-span-2 bg-[#171480] ">
-            <p className="text-white bg-[#171480]  text-center font-yatra-one text-xl font-medium">
+            <p className="text-white bg-[#171480] mr-2  text-center font-yatra-one text-xl font-medium">
               {" "}
               राष्ट्रवादी काँग्रेस पक्ष शरदचंद्र पवार <br></br> भोकरदन -
               जाफ्राबाद

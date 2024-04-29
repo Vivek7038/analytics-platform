@@ -2,15 +2,15 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
-  Link,
   Navigate,
 } from "react-router-dom";
 import LoginForm from "./pages/login/login";
-import { Children, useContext, useState } from "react";
+import { useContext } from "react";
 import Home from "./pages/Home";
 import { Page1 } from "./pages/Page1";
 import { Page2 } from "./pages/Page2";
 import { MyContext } from "./provider/AuthProvider";
+import  { Toaster } from 'react-hot-toast';
 
 function App() {
   const { currentUser, setCurrentUser } = useContext(MyContext);
@@ -23,6 +23,7 @@ function App() {
   return (
     <>
       <Router>
+      <Toaster />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/page1" element={<Page1 />} />

@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import toast from "react-hot-toast";
 
 const Form = () => {
   const [image, setImage] = useState(null);
+  const [formValid, setFormValid] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
     whatsapp_no: "",
@@ -16,6 +18,14 @@ const Form = () => {
     village: "",
     information: "",
   });
+
+  useEffect(() => {
+    const isFormValid = Object.values(formData).every(
+      (value) => value.trim() !== ""
+    );
+    setFormValid(isFormValid);
+  }, [formData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -58,17 +68,35 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!formValid) {
+      toast.error("Field cannot be empty");
+      return;
+    }
     try {
+      image && uploadFile();
       const docRef = await addDoc(
         collection(db, "userinfo"),
         {
           ...formData,
         },
+        toast.success("New user Created"),
+        setImage(null),
+        setFormData({
+          full_name: "",
+          whatsapp_no: "",
+          mobile_no: "",
+          position: "",
+          gender: "",
+          Taluka: "",
+          dateOfBirth: "",
+          village: "",
+          information: "",
+        }),
+        setFormValid(false),
         console.log("datasend ")
       );
-      image && uploadFile();
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong"), console.log(error);
     }
 
     console.log(formData);
@@ -83,14 +111,12 @@ const Form = () => {
           <div className="container max-w-screen-lg mx-auto flex flex-col gap-x-10 fe">
             <form onSubmit={handleSubmit}>
               <div className="py-2 flex items-center justify-center ">
-                <div className="rounded-full border-2 border-black w-20 h-20 overflow-hidden">
-                  {image && (
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="Preview"
-                      className="rounded-full w-full h-full object-cover"
-                    />
-                  )}
+                <div className="rounded-full border-2 border-black w-24 h-24 overflow-hidden">
+                  <img
+                    src={image ? URL.createObjectURL(image) : "./avatar.png"}
+                    alt="Preview"
+                    className="rounded-full w-full h-full object-cover"
+                  />
                 </div>
               </div>
 
@@ -249,7 +275,7 @@ const Form = () => {
                 />
               </div>
               <button
-                  type="submit"
+                type="submit"
                 className="bg-[#171480] w-[96%] text-white px-4 py-2 rounded mt-4"
               >
                 Register/नोंदवा{" "}
