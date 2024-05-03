@@ -77,12 +77,8 @@ export const Page2 = () => {
 
   return (
     <main className="min-h-[100vh] min-w-[100vw]">
-      <div></div>
-      <SearchBar
-        onFilterTextChange={onFilterTextChange}
-        clearFilters={clearFilters}
-        isFilter={isFilter}
-      />
+      <div className="px-6 py-4">
+      <SearchBar onFilterTextChange={onFilterTextChange} clearFilters={clearFilters} isFilter={isFilter} />
       <div
         className="ag-theme-quartz "
         style={{ height: "100vh", width: "100vw" }}
@@ -94,6 +90,7 @@ export const Page2 = () => {
           columnDefs={colDefs}
           onGridReady={onGridReady}
         />
+      </div>
       </div>
     </main>
   );
