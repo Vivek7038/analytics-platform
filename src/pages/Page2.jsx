@@ -9,6 +9,7 @@ import {
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
+import SearchBar from "../components/SearchBar";
 
 const data = [
   { headerName: "Gender", field: "gender" },
@@ -26,8 +27,22 @@ const data = [
 
 export const Page2 = () => {
   const [rowData, setRowData] = useState([]);
-  const [colDefs, setColDefs] = useState(data);
-
+  const [colDefs, setColDefs] = useState([
+    { headerName: "Gender", field: "gender" },
+    { headerName: "Date of Birth", field: "dateOfBirth" },
+    { headerName: "Position", field: "position" },
+    { headerName: "Village", field: "village" },
+    { headerName: "Information", field: "information" },
+    { headerName: "WhatsApp Number", field: "whatsapp_no" },
+    { headerName: "Full Name", field: "full_name" },
+    { headerName: "Mobile Number", field: "mobile_no" },
+    { headerName: "Taluka", field: "Taluka" },
+    { headerName: "Image", field: "img" },
+    { headerName: "ID", field: "id" },
+  ]);
+  const [gridApi, setGridApi] = useState(null);
+  const [isFilter, setIsFilter] = useState(false);
+  const [defaultPageSize, setDefaultPageSize] = useState(15);
   const getRowData = async () => {
     const collectionRef = collection(db, "userinfo");
     await getDocs(collectionRef)
@@ -40,18 +55,44 @@ export const Page2 = () => {
         console.log(error);
       });
   };
+  const onGridReady = (params) => {
+    console.log(params, "param");
+    setGridApi(params.api);
+  };
+  const clearFilters = () => {
+    if (gridApi) {
+      gridApi.setFilterModel(null);
+    }
+  };
 
+  const onFilterTextChange = (text) => {
+    gridApi.setGridOption("quickFilterText", text);
+  };
+  const onFilterChanged = (event) => {
+    setIsFilter(event.api.isAnyFilterPresent());
+  };
   useEffect(() => {
     getRowData();
   }, []);
 
   return (
-    <main className=" min-h-[88vh] max-h-auto w-full overflow-x-hidden pt-2 noscroll relative overflow-y-scroll">
-      <div className="ag-theme-quartz h-auto">
+    <main className="min-h-[100vh] min-w-[100vw]">
+      <div></div>
+      <SearchBar
+        onFilterTextChange={onFilterTextChange}
+        clearFilters={clearFilters}
+        isFilter={isFilter}
+      />
+      <div
+        className="ag-theme-quartz "
+        style={{ height: "100vh", width: "100vw" }}
+      >
         <AgGridReact
           className="ag-grid"
+          style={{ width: "100%", height: "100%" }}
           rowData={rowData}
           columnDefs={colDefs}
+          onGridReady={onGridReady}
         />
       </div>
     </main>
