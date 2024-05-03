@@ -67,6 +67,7 @@ export const Page2 = () => {
 
   const onFilterTextChange = (text) => {
     gridApi.setGridOption("quickFilterText", text);
+    setIsFilter(true)
   };
   const onFilterChanged = (event) => {
     setIsFilter(event.api.isAnyFilterPresent());
@@ -74,7 +75,22 @@ export const Page2 = () => {
   useEffect(() => {
     getRowData();
   }, []);
-
+  var localeText = {
+    pageSizeSelectorLabel: 'Number of Cases:',
+}
+  const gridOptions = {
+    autoSizeStrategy: {
+        type: 'fitGridWidth'
+    },
+    paginationPageSize: 15,
+    paginationPageSizeSelector: [15, 20, 50, 100],
+    domLayout: "autoHeight",
+    localeText: localeText,
+}
+  const defaultColDef = {
+    filter: true,
+    sortable: true,
+}
   return (
     <main className="min-h-[100vh] min-w-[100vw]">
       <div className="px-6 py-4">
@@ -89,6 +105,10 @@ export const Page2 = () => {
           rowData={rowData}
           columnDefs={colDefs}
           onGridReady={onGridReady}
+          defaultColDef={defaultColDef}
+          pagination={true}
+          onFilterChanged={onFilterChanged}
+          gridOptions={gridOptions}
         />
       </div>
       </div>
