@@ -33,7 +33,7 @@ const LoginForm = () => {
       );
       if (userCredential.user) {
         setCurrentUser(true);
-        navigate("/")
+        navigate("/page2")
       }
       console.log("User logged in Successfully");
     } catch (error) {
