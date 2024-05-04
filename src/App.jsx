@@ -30,9 +30,9 @@ function App() {
           <Route
             path="/page2"
             element={
-              <RequiredAuth>
+              // <RequiredAuth>
                 <Page2 />
-              </RequiredAuth>
+              // </RequiredAuth>
             }
           />
           <Route path="/login" element={<LoginForm />} />
