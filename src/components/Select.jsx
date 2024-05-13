@@ -1,5 +1,5 @@
 export const Bhokardan = [
-  { value: "वाल् सावंगी", label: "वाल् सावंगी" },
+  { value: "वालसावंगी ", label: "वालसावंगी " },
   { value: "सुन्दरवाड़ी", label: "सुन्दरवाड़ी" },
   { value: "वीजोरा", label: "वीजोरा" },
   { value: "वानखेडे", label: "वानखेडे" },
