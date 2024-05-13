@@ -21,7 +21,7 @@ export const Bhokardan = [
   { value: "कोदा ", label: "कोदा" },
   { value: "धोंडखेडा", label: " धोंडखेडा" },
   { value: "दहिगाव ", label: "दहिगाव " },
-  { value: "तांगडा ", label: "तांगडा" },
+  { value: "वडोदतांगडा ", label: "वडोदतांगडा " },
   { value: "हिसोडा खु ", label: "हिसोडा खु " },
   { value: "हिसोडा बु ", label: "हिसोडा बु " },
   { value: " कोठकोळी ", label: " कोठकोळी " },
