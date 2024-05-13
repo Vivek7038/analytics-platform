@@ -20,7 +20,7 @@ const Navbar = () => {
         </div>
         <div className="row-span-2 col-span-2 bg-white ">
           <p className=" bg-white text-[#171480] pl-12  text-center pt-3 font-semiboldbold font-yatra-one text-xl">
-            मा. आमदार चंद्रकांत पुंडलीकराव दानवे{" "}
+            मा. आमदार चंद्रकांत पुंडलिकराव  दानवे{" "}
           </p>
         </div>
       </div>

@@ -3,6 +3,8 @@ import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";
+import { Bhokardan, Jafrabad,postion } from "./Select";
+import Select from "react-select";
 
 const Form = () => {
   const [image, setImage] = useState(null);
@@ -18,7 +20,6 @@ const Form = () => {
     village: "",
     information: "",
   });
-
   useEffect(() => {
     const isFormValid = Object.values(formData).every(
       (value) => value.trim() !== ""
@@ -33,6 +34,21 @@ const Form = () => {
       [name]: value,
     }));
   };
+  const handleSelectChange = (selected) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      village: selected.value,
+    }));
+  };
+
+  const hnadelPosition=(selected)=>{
+    setFormData((prev)=>({
+      ...prev,
+      position:selected.value
+    }))
+  }
+
+
   const uploadFile = () => {
     const name = new Date().getTime() + image.name;
     console.log(name);
@@ -64,7 +80,6 @@ const Form = () => {
         });
       }
     );
-    
   };
 
   const handleSubmit = async (e) => {
@@ -136,7 +151,7 @@ const Form = () => {
               </div>
               <div className="py-2">
                 <label htmlFor="whatsapp_no">
-                  WhatsApp No/व्हॉट्सॲप क्र. *
+                  WhatsApp No/व्हॉट्सॲप क्र.
                   <span className="text-red-600">*</span>
                 </label>
                 <input
@@ -161,16 +176,9 @@ const Form = () => {
               </div>
               <div className="py-2">
                 <label htmlFor="position">
-                  Position/पद <span className="text-red-600">*</span>
+                  Position/पद
                 </label>
-                <input
-                  type="text"
-                  name="position"
-                  id="position"
-                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
-                  value={formData.position}
-                  onChange={handleChange}
-                />
+                <Select onChange={hnadelPosition} options={postion}/>
               </div>
               <div className="py-2 relative flex flex-col gap-2">
                 <label htmlFor="Profile Photo">
@@ -211,7 +219,7 @@ const Form = () => {
                 <label htmlFor="female">Female/स्त्री</label>
               </div>
               <div className="py-2">
-                <label htmlFor="position ">
+                <label htmlFor="dateOfBirth ">
                   Date of Birth/जन्मतारीख{" "}
                   <span className="text-red-600">*</span>
                 </label>
@@ -250,20 +258,13 @@ const Form = () => {
                 <label htmlFor="Taluka">जाफ्राबाद</label>
               </div>
               <div className="py-2">
-                <label htmlFor="Village">Village Name/गावाचे नाव*</label>
-                <input
-                  type="text"
-                  name="village"
-                  id="village"
-                  className="h-10 border pt-2 rounded px-4 w-full bg-gray-50"
-                  value={formData.village}
-                  onChange={handleChange}
-                />
+                <label htmlFor="Village">Village Name/गावाचे नाव<span className="text-red-600">*</span></label>
+                <Select onChange={handleSelectChange} options={formData.Taluka==="जाफ्राबाद"?(Jafrabad):(Bhokardan)}/>
               </div>
 
               <div className="py-2">
                 <label htmlFor="Village">
-                  Information/माहिती<span className="text-red-600">*</span>
+                  Information/माहिती
                 </label>
                 <textarea
                   type="text"
