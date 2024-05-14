@@ -1,4 +1,5 @@
 export const Bhokardan = [
+  { value: "भोकरदन ", label: "भोकरदन " },
   { value: "वालसावंगी ", label: "वालसावंगी " },
   { value: "सुन्दरवाड़ी", label: "सुन्दरवाड़ी" },
   { value: "वीजोरा", label: "वीजोरा" },
@@ -114,7 +115,8 @@ export const Bhokardan = [
   { value: "बाभूळगाव", label: "बाभूळगाव" },
   { value: "दावतपूर", label: "दावतपूर" },
   { value: "आव्हाना", label: "आव्हाना" },
-  { value: "वाडी बु. गोकूळ", label: "वाडी बु. गोकूळ" },
+  { value: "वाडी बु.", label: "वाडी बु. "},
+  { value: "गोकूळ", label: "गोकूळ"},
   { value: "मुठाड", label: "मुठाड" },
   { value: "मालखेडा", label: "मालखेडा" },
   { value: "कठोरा बा", label: "कठोरा बा" },
@@ -147,6 +149,7 @@ export const Bhokardan = [
   { value: "नळणी बु", label: "नळणी बु" },
 ];
 export const Jafrabad = [
+  { value: "जाफ्राबाद", label: "जाफ्राबाद" },
   { value: "वरुण बु", label: "वरुण बु" },
   { value: "सांजोळ", label: "सांजोळ" },
   { value: "कोळेगांव", label: "कोळेगांव" },
