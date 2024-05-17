@@ -10,6 +10,8 @@ import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import SearchBar from "../components/SearchBar";
+import CompanyLogoRenderer from "../components/CompanyLogoRenderer";
+import Action from "../components/Action";
 
 const data = [
   { headerName: "Gender", field: "gender" },
@@ -28,21 +30,24 @@ const data = [
 export const Page2 = () => {
   const [rowData, setRowData] = useState([]);
   const [colDefs, setColDefs] = useState([
-    { headerName: "Gender", field: "gender" },
-    { headerName: "Date of Birth", field: "dateOfBirth" },
+    { headerName: "", field: "img" ,cellRenderer: CompanyLogoRenderer, flex:1},
+    { headerName: "Name", field: "full_name" },
+    { headerName: "WhatsApp Number", field: "whatsapp_no" ,flex:1 },
+    // { headerName: "Gender", field: "gender" },
+    // { headerName: "Date of Birth", field: "dateOfBirth" },
     { headerName: "Position", field: "position" },
-    { headerName: "Village", field: "village" },
-    { headerName: "Information", field: "information" },
-    { headerName: "WhatsApp Number", field: "whatsapp_no" },
-    { headerName: "Full Name", field: "full_name" },
-    { headerName: "Mobile Number", field: "mobile_no" },
+    // { headerName: "Village", field: "village" },
+    // { headerName: "Information", field: "information" },
+    // { headerName: "Mobile Number", field: "mobile_no" },
     { headerName: "Taluka", field: "Taluka" },
-    { headerName: "Image", field: "img" },
-    { headerName: "ID", field: "id" },
+    { headerName: "Action", field: "id" ,cellRenderer:Action ,flex:2},
+    // {headerName:"Action", field:"action", cellRenderer:Action}
   ]);
   const [gridApi, setGridApi] = useState(null);
   const [isFilter, setIsFilter] = useState(false);
   const [defaultPageSize, setDefaultPageSize] = useState(15);
+
+
   const getRowData = async () => {
     const collectionRef = collection(db, "userinfo");
     await getDocs(collectionRef)
@@ -86,22 +91,25 @@ export const Page2 = () => {
     paginationPageSizeSelector: [15, 20, 50, 100],
     domLayout: "autoHeight",
     localeText: localeText,
+     rowHeight: 50,
+
 }
   const defaultColDef = {
+    flex:1,
     filter: true,
     sortable: true,
 }
   return (
-    <main className="min-h-[100vh] min-w-[100vw]">
+    <main className="">
       <div className="px-6 py-4">
       <SearchBar onFilterTextChange={onFilterTextChange} clearFilters={clearFilters} isFilter={isFilter} />
       <div
         className="ag-theme-quartz "
-        style={{ height: "100vh", width: "100vw" }}
+        style={{ height: "100vh", width: "60vw" }}
       >
         <AgGridReact
           className="ag-grid"
-          style={{ width: "100%", height: "100%" }}
+          
           rowData={rowData}
           columnDefs={colDefs}
           onGridReady={onGridReady}

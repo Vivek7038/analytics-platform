@@ -3,7 +3,7 @@ import { db, storage } from "../firebase";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";
-import { Bhokardan, Jafrabad,postion } from "./Select";
+import { Bhokardan, Jafrabad, postion } from "./Select";
 import Select from "react-select";
 
 const Form = () => {
@@ -41,45 +41,48 @@ const Form = () => {
     }));
   };
 
-  const hnadelPosition=(selected)=>{
-    setFormData((prev)=>({
+  const hnadelPosition = (selected) => {
+    setFormData((prev) => ({
       ...prev,
-      position:selected.value
-    }))
-  }
-
+      position: selected.value,
+    }));
+  };
 
   const uploadFile = () => {
-    const name = new Date().getTime() + image.name;
-    console.log(name);
-    const storageRef = ref(storage, image.name);
-    const uploadTask = uploadBytesResumable(storageRef, image);
+    return new Promise((res, rej) => {
+      const name = new Date().getTime() + image.name;
+      console.log(name);
+      const storageRef = ref(storage, image.name);
+      const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-        switch (snapshot.state) {
-          case "paused":
-            console.log("Upload is paused");
-            break;
-          case "running":
-            console.log("Upload is running");
-            break;
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref)
+            .then((downloadURL) => {
+              console.log("File available at", downloadURL);
+              res(downloadURL);
+            })
+            .catch(rej);
         }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          // console.log("File available at", downloadURL);
-          setFormData((prev) => ({ ...prev, img: downloadURL }));
-        });
-      }
-    );
+      );
+    });
   };
 
   const handleSubmit = async (e) => {
@@ -89,11 +92,16 @@ const Form = () => {
       return;
     }
     try {
-      image && uploadFile();
+      let downloadUrl = "";
+      if (image) {
+        downloadUrl = await uploadFile();
+      }
+
       const docRef = await addDoc(
         collection(db, "userinfo"),
         {
           ...formData,
+          img: downloadUrl,
         },
         toast.success("New user Created"),
         setImage(null),
@@ -175,10 +183,8 @@ const Form = () => {
                 />
               </div>
               <div className="py-2">
-                <label htmlFor="position">
-                  Position/पद
-                </label>
-                <Select onChange={hnadelPosition} options={postion}/>
+                <label htmlFor="position">Position/पद</label>
+                <Select onChange={hnadelPosition} options={postion} />
               </div>
               <div className="py-2 relative flex flex-col gap-2">
                 <label htmlFor="Profile Photo">
@@ -258,14 +264,19 @@ const Form = () => {
                 <label htmlFor="Taluka">जाफ्राबाद</label>
               </div>
               <div className="py-2">
-                <label htmlFor="Village">Village Name/गावाचे नाव<span className="text-red-600">*</span></label>
-                <Select onChange={handleSelectChange} options={formData.Taluka==="जाफ्राबाद"?(Jafrabad):(Bhokardan)}/>
+                <label htmlFor="Village">
+                  Village Name/गावाचे नाव<span className="text-red-600">*</span>
+                </label>
+                <Select
+                  onChange={handleSelectChange}
+                  options={
+                    formData.Taluka === "जाफ्राबाद" ? Jafrabad : Bhokardan
+                  }
+                />
               </div>
 
               <div className="py-2">
-                <label htmlFor="Village">
-                  Information/माहिती
-                </label>
+                <label htmlFor="Village">Information/माहिती</label>
                 <textarea
                   type="text"
                   name="information"
