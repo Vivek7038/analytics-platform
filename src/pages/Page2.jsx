@@ -50,7 +50,7 @@ export const Page2 = () => {
           </button>
           <button
             className="px-4 bg-red-600 text-white rounded-md hover:bg-red-800"
-            onClick={() => deletuser(params)}
+            onClick={()=> deletuser(params)}
           >
             Delete
           </button>
@@ -72,7 +72,7 @@ export const Page2 = () => {
     const id = param.data.id;
     try {
       await deleteDoc(doc(db, "userinfo", id));
-      setRowData(rowData.filter((item) => item.id !== id));
+      setRowData(prev=>prev.filter((item) => item.id !== id));
       toast.success("User deleted");
     } catch (e) {
       console.log(e);
@@ -153,7 +153,7 @@ export const Page2 = () => {
           />
         </div>
       </div>
-      <Profile data={userData} />
+      <Profile data={userData} rowdata={getRowData}/>
     </main>
   );
 };
